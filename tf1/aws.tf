@@ -7,7 +7,7 @@ resource "aws_instance" "a" {
   ami           = var.ami
   instance_type = var.instance_type
   tags = {
-    Name        = "Flugel",
+    Name        = "Flugel1",
     Owner       = "InfraTeam",
   }
 
