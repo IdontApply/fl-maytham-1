@@ -8,7 +8,7 @@ resource "aws_instance" "a" {
   instance_type = var.instance_type
   tags = {
     Name        = "Flugel1",
-    Owner       = "InfraTeam",
+    Owner       = "InfraTeam1",
   }
 
 }
