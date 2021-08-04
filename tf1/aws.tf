@@ -2,13 +2,13 @@ provider "aws" {
   region  = var.region
 }
 
-
+# fixed it
 resource "aws_instance" "a" {
   ami           = var.ami
   instance_type = var.instance_type
   tags = {
-    Name        = "Flugel1",
-    Owner       = "InfraTeam1",
+    Name        = "Flugel",
+    Owner       = "InfraTeam",
   }
 
 }
