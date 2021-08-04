@@ -2,7 +2,7 @@ provider "aws" {
   region  = var.region
 }
 
-# fixed it
+# fixed it hopfully 
 resource "aws_instance" "a" {
   ami           = var.ami
   instance_type = var.instance_type
