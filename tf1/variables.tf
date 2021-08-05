@@ -1,7 +1,7 @@
 variable "ami" {
   type        = string
   description = "amazon machine images"
-  default     = "ami-0d4a18a6050cef430"
+  default     = "eu-west-1"
 }
 variable "region" {
   type        = string
