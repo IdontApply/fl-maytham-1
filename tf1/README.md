@@ -8,8 +8,6 @@ This module runs with default input varibles:
 To run on defaults, first initialise it:
 ```console
 terraform init
-terraform plan
-terrafrom apply
 ```
 Then plan and apply:
 ```console
