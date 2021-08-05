@@ -1,11 +1,9 @@
 provider "aws" {
-  shared_credentials_file = var.shared_credentials_file
-  profile                 = "default"
   region                  = "eu-west-1"
 }
 # Create key pair for ssh, uploading public key in aws, to be used by ec2 instances.
 resource "aws_key_pair" "a" {
-  key_name   = "my-key"
+  key_name   = var.key_pair_name
   public_key = file(pathexpand(var.public_key_path))
 }
 
@@ -220,7 +218,7 @@ resource "aws_instance" "b" {
   subnet_id                   = aws_subnet.privet[count.index].id
   associate_public_ip_address = true
 
-  key_name = "my-key"
+  key_name = var.key_pair_name
 
   tags = {
     Name = "${var.tag_name}"

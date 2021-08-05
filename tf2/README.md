@@ -1,4 +1,4 @@
-<p>Note: This module assumes that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in your environment.</p>
+<p>Note: This module assumes that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in environment it will run on.</p>
 
 This module runs with default input varibles:
 - Ubuntu 20.04 ami image.

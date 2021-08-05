@@ -1,6 +1,10 @@
 
 
 This repo has 2 terraform modules.
+<<<<<<< HEAD
+<p>Note: These module assume that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in environment it will run on.</p>
+=======
+>>>>>>> origin
 
 # [tf1](https://github.com/IdontApply/fl-maytham-1/tree/main/tf1) 
 
