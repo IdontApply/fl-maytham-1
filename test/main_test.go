@@ -1,10 +1,12 @@
-package main
+package test
 
 import (
 	"os"
 	"path/filepath"
 	"testing"
+	"time"
 
+	http_helper "github.com/gruntwork-io/terratest/modules/http-helper"
 	"github.com/gruntwork-io/terratest/modules/terraform"
 	"github.com/stretchr/testify/assert"
 )
@@ -33,5 +35,21 @@ func TestTf1(t *testing.T) {
 
 	assert.Equal(t, map[string]interface{}{"Name": "Flugel", "Owner": "InfraTeam"}, ec2Tags)
 	assert.Equal(t, map[string]interface{}{"Name": "Flugel", "Owner": "InfraTeam"}, s32Tags)
+}
 
+// function to test tf2 moudle, test checks if files are reachable in the ALB
+func TestTf2(t *testing.T) {
+	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
+		// The path to where our Terraform code is located
+		TerraformDir: "../tf2",
+	})
+
+	defer terraform.Destroy(t, terraformOptions)
+
+	terraform.InitAndApply(t, terraformOptions)
+	albDNS := "http://" + terraform.Output(t, terraformOptions, "aws_alb_dns")
+
+	maxRetries := 30
+	timeBetweenRetries := 5 * time.Second
+	http_helper.HttpGetWithRetry(t, albDNS, nil, 200, "Flugel", maxRetries, timeBetweenRetries)
 }
