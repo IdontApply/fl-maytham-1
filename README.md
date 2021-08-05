@@ -23,7 +23,7 @@ Info on deployment will be found here [tf1](https://github.com/IdontApply/fl-may
 
 # [tf2](https://github.com/IdontApply/fl-maytham-1/tree/main/tf2) 
 
-This module consistes of mainly of:
+This module consistes mainly of:
 - 1 vpc
 - 2 ec2 instances.
 - 1 alb.
