@@ -34,3 +34,4 @@ jobs:
         env:
           SSH_KEY_PUB: ${{secrets.SSH_KEY_PUB}}
       - run: go test -v -timeout 15m -run TestTf2
+        working-directory: test
