@@ -23,6 +23,11 @@ variable "private_key_path" {
   description = "ssh privet key path"
   default = "../../id_rsa"
 }
+variable "key_pair_name" {
+  type    = string
+  description = "key pair name"
+  default = "my-key"
+}
 variable "tag_name" {
   type    = string
   description = "ec2 Name tag"
