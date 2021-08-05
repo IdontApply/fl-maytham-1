@@ -255,6 +255,7 @@ resource "aws_instance" "b" {
       "chmod +x /tmp/nginx.py",
       "chmod +x /tmp/nginx.sh",
       "/tmp/nginx.sh ${var.tag_name}",
+      "exit 0",
     ]
   }
 }
