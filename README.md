@@ -25,4 +25,4 @@ This module consistes of mainly of:
 ```console
 go test -v -timeout 15m -run TestTf2
 ```
-Info on deployment will be found here [tf1](https://github.com/IdontApply/fl-maytham-1/tree/main/tf1).
+Info on deployment will be found here [tf2](https://github.com/IdontApply/fl-maytham-1/tree/main/tf2).
