@@ -51,7 +51,6 @@ resource "aws_route_table" "prv_sub_rt" {
     cidr_block     = "0.0.0.0/0"
     nat_gateway_id = aws_nat_gateway.natgw.id
   }
-
   tags = {
     Name    = "private subnet route table"
     Project = "flugel"
@@ -74,7 +73,6 @@ resource "aws_subnet" "privet" {
   cidr_block              = "10.0.${count.index}.0/24"
   map_public_ip_on_launch = false
   availability_zone       = element(data.aws_availability_zones.available.names, count.index)
-
   tags = {
     Project = "flugel"
   }
@@ -204,6 +202,17 @@ resource "aws_alb_listener" "listener_http" {
   }
 }
 
+# template file for nginx script
+data "template_file" "nginx" {
+  template = file("scripts/nginx.tpl")
+
+  vars = {
+    input_tags = jsonencode(var.tags)
+    sever_name = aws_alb.b.dns_name
+  }
+}
+
+
 # Create ec2 instances running nginx
 resource "aws_instance" "b" {
   depends_on = [
@@ -221,8 +230,9 @@ resource "aws_instance" "b" {
   key_name = var.key_pair_name
 
   tags = {
-    Name = "${var.tag_name}"
+    for k, v in var.tags : k => v
   }
+
 
   # Create connection ssh for remote-exec
   connection {
@@ -232,56 +242,9 @@ resource "aws_instance" "b" {
     private_key = file(pathexpand(var.private_key_path))
   }
 
-  # Provisioner shell script that will setup nginx
-  provisioner "file" {
-    source      = "scripts/nginx.sh"
-    destination = "/tmp/nginx.sh"
-  }
+  user_data = data.template_file.nginx.rendered
 
-  # Provisioner nginx configration
-  provisioner "file" {
-    source      = "scripts/domain"
-    destination = "/tmp/domain"
-  }
-
-  # Provisioner python script to create the files to be served by nginx
-  provisioner "file" {
-    source      = "scripts/nginx.py"
-    destination = "/tmp/nginx.py"
-  }
-
-  user_data = <<-EOT
-      #!/usr/bin/bash
-      set -x
-      sudo apt update -y
-      sudo apt -y upgrade
-      sudo apt install nginx -y
-      sudo ufw allow 'Nginx HTTP'
-
-      sudo mkdir -p /var/www/domain/html
-      sudo chown -R $USER:$USER /var/www/domain/html
-      sudo chmod -R 755 /var/www/domain
-
-      sudo chmod +x /tmp/nginx.py
-      sudo python3 /tmp/nginx.py ${var.tag_name}
-
-      yes | sudo cp /tmp/index.html /var/www/domain/html
-      yes | sudo cp /tmp/index.html /var/www/html/index.nginx-debian.html
-      yes | sudo cp /tmp/domain /etc/nginx/sites-available
-
-      sudo ln -s /etc/nginx/sites-available/domain /etc/nginx/sites-enabled/
-      sudo systemctl restart nginx
-      set +x
-	EOT
-  # provisioner "remote-exec" {
-  #   on_failure = “continue”
-  #   inline = [
-  #     "chmod +x /tmp/nginx.py",
-  #     "chmod +x /tmp/nginx.sh",
-  #     "/tmp/nginx.sh ${var.tag_name}",
-  #     "exit 0",
-  #   ]
-  # }
 }
+
 
 

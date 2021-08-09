@@ -1,6 +1,8 @@
 package test
 
 import (
+	"fmt"
+	"math/rand"
 	"os"
 	"path/filepath"
 	"testing"
@@ -39,17 +41,34 @@ func TestTf1(t *testing.T) {
 
 // function to test tf2 moudle, test checks if files are reachable in the ALB
 func TestTf2(t *testing.T) {
+	// map for radom number of tags between 2 to 5
+	rTags := map[string]string{}
+	// genrate random number from 2 to 5
+	rand.Seed(time.Now().UTC().UnixNano())
+	min := 2
+	max := 6
+	rNum := min + rand.Intn(max-min)
+	for i := 0; i < rNum; i++ {
+		rTags[fmt.Sprintf("tag%d", i)] = fmt.Sprintf("potato%d", i)
+	}
+
 	terraformOptions := terraform.WithDefaultRetryableErrors(t, &terraform.Options{
 		// The path to where our Terraform code is located
 		TerraformDir: "../tf2",
+		Vars: map[string]interface{}{
+			"tags": rTags,
+		},
 	})
 
 	defer terraform.Destroy(t, terraformOptions)
 
 	terraform.InitAndApply(t, terraformOptions)
+	// url to alb
 	albDNS := "http://" + terraform.Output(t, terraformOptions, "aws_alb_dns")
 
 	maxRetries := 30
 	timeBetweenRetries := 5 * time.Second
-	http_helper.HttpGetWithRetry(t, albDNS, nil, 200, "Flugel", maxRetries, timeBetweenRetries)
+	for key, element := range rTags {
+		http_helper.HttpGetWithRetry(t, albDNS+"/"+key, nil, 200, element, maxRetries, timeBetweenRetries)
+	}
 }
