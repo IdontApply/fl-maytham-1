@@ -28,8 +28,12 @@ variable "key_pair_name" {
   description = "key pair name"
   default = "my-key"
 }
-variable "tag_name" {
+variable "tag_index" {
   type    = string
   description = "ec2 Name tag"
   default = "Flugel"
+}
+variable "tags" {
+  type = map(string)
+  default = {}
 }

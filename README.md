@@ -4,7 +4,6 @@ This repo has 2 terraform modules.
 
 <p>Note: These modules assume that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in environment it will run on.</p>
 
-
 # [tf1](https://github.com/IdontApply/fl-maytham-1/tree/main/tf1) 
 
 This module consistes of:
@@ -34,3 +33,6 @@ This module consistes mainly of:
 go test -v -timeout 15m -run TestTf2
 ```
 Info on deployment will be found here [tf2](https://github.com/IdontApply/fl-maytham-1/tree/main/tf2).
+
+# [pull-requests and pushes](https://github.com/IdontApply/fl-maytham-1/tree/main/.github/workflows)
+each tests tf1 and tf2 will run on pull-requests or push on changes to its folder/module.
