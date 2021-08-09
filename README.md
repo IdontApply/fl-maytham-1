@@ -2,7 +2,7 @@
 
 This repo has 2 terraform modules.
 
-<p>Note: These module assume that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in environment it will run on.</p>
+<p>Note: These modules assume that the enviroment variables AWS_SECRET_ACCESS_KEY and AWS_ACCESS_KEY_ID exists in environment it will run on.</p>
 
 # [tf1](https://github.com/IdontApply/fl-maytham-1/tree/main/tf1) 
 
@@ -22,7 +22,7 @@ Info on deployment will be found here [tf1](https://github.com/IdontApply/fl-may
 
 # [tf2](https://github.com/IdontApply/fl-maytham-1/tree/main/tf2) 
 
-This module consistes of mainly of:
+This module consistes mainly of:
 - 1 vpc
 - 2 ec2 instances.
 - 1 alb.
