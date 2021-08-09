@@ -35,4 +35,4 @@ go test -v -timeout 15m -run TestTf2
 Info on deployment will be found here [tf2](https://github.com/IdontApply/fl-maytham-1/tree/main/tf2).
 
 # [pull-requests and pushes](https://github.com/IdontApply/fl-maytham-1/tree/main/.github/workflows)
-each tests tf1 and tf2 will run on pull-requests or push on changes to its folder/module.
+Each tests for tf1 and tf2 will run on pull-requests or pushes on changes to its folder/module.
